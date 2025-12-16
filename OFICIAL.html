@@ -43,8 +43,8 @@
             max-height: 0;
             opacity: 0;
             overflow: hidden;
-            /* Fondo de contenido al 25% de opacidad (75% de transparencia) - Solicitado por el usuario */
-            background-color: rgba(255, 255, 255, 0.25); 
+            /* MODIFICADO: Fondo de contenido al 50% de opacidad (50% de transparencia) */
+            background-color: rgba(255, 255, 255, 0.50); 
         }
         .accordion-content.open {
             opacity: 1;
@@ -68,16 +68,21 @@
         
         .marquee-content {
             display: flex;
-            animation-duration: 40s; 
+            /* Aumento de velocidad (de 40s a 25s) */
+            animation-duration: 25s; 
             animation-timing-function: linear;
             animation-iteration-count: infinite;
+            touch-action: pan-y; /* Permite arrastre horizontal, evita scroll vertical */
+            user-select: none;
         }
 
         .scroll-left {
-            animation-name: scroll-left;
+            /* Carrusel 2 (Partes que Vendemos) - Mueve de Derecha a Izquierda */
+            animation-name: scroll-left; 
         }
         
         .scroll-right {
+            /* Carrusel 1 y 3 (Marcas y Proveedores) - Mueve de Izquierda a Derecha */
             animation-name: scroll-right;
         }
         
@@ -88,6 +93,7 @@
             width: auto;
             flex-shrink: 0;
             object-fit: contain;
+            pointer-events: none; /* Previene el comportamiento de arrastre por defecto en imágenes */
         }
         
         /* Botón flotante */
@@ -117,9 +123,9 @@
     <!-- CONTENEDOR PRINCIPAL (Sin fondo para dejar ver la imagen de body) -->
     <div class="w-full max-w-4xl shadow-2xl min-h-screen pb-20">
         
-        <!-- CABECERA (Fondo Blanco 25% Opacidad - Solicitado) -->
+        <!-- CABECERA (Fondo Blanco 50% Opacidad - Ajustado) -->
         <header class="py-6 flex justify-center">
-            <div class="bg-white/25 p-4 rounded-lg shadow-xl">
+            <div class="bg-white/50 p-4 rounded-lg shadow-xl">
                 <img src="https://i.imgur.com/KTKKpbQ.png" alt="[Logo de USA Partes]" class="h-24 object-contain drop-shadow-lg">
             </div>
         </header>
@@ -127,13 +133,13 @@
         <!-- ACORDEONES PRINCIPALES -->
         <div class="p-4 space-y-4">
 
-            <!-- 1. ACORDEÓN: REPUTACIÓN (Contenedor principal transparente) -->
+            <!-- 1. ACORDEÓN: REPUTACIÓN -->
             <div class="border border-gray-200 rounded-lg overflow-hidden bg-transparent shadow-xl">
                 <button onclick="toggleAccordion('acc1')" class="accordion-trigger p-4 bg-usaBlue text-white font-bold text-lg hover:bg-usaDarkBlue1 transition">
                     <span>REPUTACIÓN</span>
                     <svg class="w-6 h-6 transform transition-transform" id="icon-acc1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
-                <div id="acc1" class="accordion-content"> <!-- Fondo 25% Opaco (CSS) -->
+                <div id="acc1" class="accordion-content"> <!-- Ahora con 50% Opacidad -->
                     <div class="p-4 flex flex-col items-center space-y-6">
                         <!-- Imagen 1 -> MercadoLibre -->
                         <a href="https://www.mercadolibre.com.ve/perfil/vendedor/USA%20PARTES" target="_blank" class="w-full max-w-md hover:opacity-90 transition">
@@ -172,13 +178,13 @@
                 </div>
             </div>
 
-            <!-- 2. ACORDEÓN: SOLICITAR PRESUPUESTO (Contenedor principal transparente) -->
+            <!-- 2. ACORDEÓN: SOLICITAR PRESUPUESTO -->
             <div class="border border-gray-200 rounded-lg overflow-hidden bg-transparent shadow-xl">
                 <button onclick="toggleAccordion('acc2')" class="accordion-trigger p-4 bg-usaBlue text-white font-bold text-lg hover:bg-usaDarkBlue1 transition">
                     <span>SOLICITAR PRESUPUESTO</span>
                     <svg class="w-6 h-6 transform transition-transform" id="icon-acc2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
-                <div id="acc2" class="accordion-content"> <!-- Fondo 25% Opaco (CSS) -->
+                <div id="acc2" class="accordion-content"> <!-- Ahora con 50% Opacidad -->
                     <div class="p-6 flex flex-col items-center text-left space-y-4">
                         <ul class="list-disc list-inside space-y-2 text-gray-700 w-full max-w-2xl">
                             <li>Presupuesto sin compromiso.</li>
@@ -195,13 +201,13 @@
                 </div>
             </div>
 
-            <!-- 3. ACORDEÓN: MÉTODOS DE DESPACHO (Contenedor principal transparente) -->
+            <!-- 3. ACORDEÓN: MÉTODOS DE DESPACHO -->
             <div class="border border-gray-200 rounded-lg overflow-hidden bg-transparent shadow-xl">
                 <button onclick="toggleAccordion('acc3')" class="accordion-trigger p-4 bg-usaBlue text-white font-bold text-lg hover:bg-usaDarkBlue1 transition">
                     <span>MÉTODOS DE DESPACHO</span>
                     <svg class="w-6 h-6 transform transition-transform" id="icon-acc3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
-                <div id="acc3" class="accordion-content"> <!-- Fondo 25% Opaco (CSS) -->
+                <div id="acc3" class="accordion-content"> <!-- Ahora con 50% Opacidad -->
                     <div class="p-4 space-y-3">
                         
                         <!-- Sub-Acordeón 1: RETIRO EN TIENDA (Fondo 25% opaco para mejor contraste) -->
@@ -219,7 +225,7 @@
                             </div>
                         </div>
 
-                        <!-- Sub-Acordeón 2: DELIVERY (Fondo 25% opaco para mejor contraste) -->
+                        <!-- Sub-Acordeón 2: DELIVERY -->
                         <div class="bg-white/25 rounded border border-gray-300 overflow-hidden">
                             <button onclick="toggleAccordion('sub_acc2')" class="accordion-trigger p-3 bg-usaDarkBlue2 text-white font-medium hover:bg-usaBlue transition">
                                 <span>DELIVERY</span>
@@ -238,7 +244,7 @@
                             </div>
                         </div>
 
-                        <!-- Sub-Acordeón 3: ENVÍOS NACIONALES (Fondo 25% opaco para mejor contraste) -->
+                        <!-- Sub-Acordeón 3: ENVÍOS NACIONALES -->
                         <div class="bg-white/25 rounded border border-gray-300 overflow-hidden">
                             <button onclick="toggleAccordion('sub_acc3')" class="accordion-trigger p-3 bg-usaDarkBlue2 text-white font-medium hover:bg-usaBlue transition">
                                 <span>ENVÍOS NACIONALES</span>
@@ -256,7 +262,7 @@
                             </div>
                         </div>
 
-                        <!-- Sub-Acordeón 4: IMPORTACIONES (Fondo 25% opaco para mejor contraste) -->
+                        <!-- Sub-Acordeón 4: IMPORTACIONES -->
                         <div class="bg-white/25 rounded border border-gray-300 overflow-hidden">
                             <button onclick="toggleAccordion('sub_acc4')" class="accordion-trigger p-3 bg-usaDarkBlue2 text-white font-medium hover:bg-usaBlue transition">
                                 <span>IMPORTACIONES</span>
@@ -279,13 +285,13 @@
                 </div>
             </div>
 
-            <!-- 4. ACORDEÓN: HORARIOS (Contenedor principal transparente) -->
+            <!-- 4. ACORDEÓN: HORARIOS -->
             <div class="border border-gray-200 rounded-lg overflow-hidden bg-transparent shadow-xl">
                 <button onclick="toggleAccordion('acc4')" class="accordion-trigger p-4 bg-usaBlue text-white font-bold text-lg hover:bg-usaDarkBlue1 transition">
                     <span>HORARIOS</span>
                     <svg class="w-6 h-6 transform transition-transform" id="icon-acc4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
-                <div id="acc4" class="accordion-content"> <!-- Fondo 25% Opaco (CSS) -->
+                <div id="acc4" class="accordion-content"> <!-- Ahora con 50% Opacidad -->
                     <div class="p-4 space-y-6 flex flex-col items-center">
                         <p class="font-bold text-center text-usaDarkBlue1 w-full">Todos los departamentos a continuación trabajan de LUNES a VIERNES en los siguientes horarios.</p>
                         
@@ -318,13 +324,13 @@
                 </div>
             </div>
 
-            <!-- 5. ACORDEÓN: MÉTODOS DE PAGO (Contenedor principal transparente) -->
+            <!-- 5. ACORDEÓN: MÉTODOS DE PAGO -->
             <div class="border border-gray-200 rounded-lg overflow-hidden bg-transparent shadow-xl">
                 <button onclick="toggleAccordion('acc5')" class="accordion-trigger p-4 bg-usaBlue text-white font-bold text-lg hover:bg-usaDarkBlue1 transition">
                     <span>MÉTODOS DE PAGO</span>
                     <svg class="w-6 h-6 transform transition-transform" id="icon-acc5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
-                <div id="acc5" class="accordion-content"> <!-- Fondo 25% Opaco (CSS) -->
+                <div id="acc5" class="accordion-content"> <!-- Ahora con 50% Opacidad -->
                     <div class="p-4 space-y-8 flex flex-col items-center">
                         
                         <!-- PAGOMOVIL -->
@@ -369,7 +375,7 @@
 
         </div> <!-- Fin de Acordeones -->
 
-        <!-- SECCIÓN DE CARRUSELES (MARQUEES) (Fondo Transparente) -->
+        <!-- SECCIÓN DE CARRUSELES (MARQUEES) -->
         <div class="bg-transparent py-8 space-y-8 overflow-hidden">
             
             <!-- 1. MARCAS QUE ATENDEMOS (Izquierda a Derecha) -->
@@ -388,7 +394,8 @@
                 <!-- Banner de Título (Fondo 95% Opaco para legibilidad, Texto oscuro) -->
                 <h3 class="text-center font-bold text-xl mb-4 p-2 bg-white/95 text-usaDarkBlue1 mx-4 rounded-lg shadow-md">PARTES QUE VENDEMOS:</h3>
                 <div class="marquee-container">
-                    <div class="marquee-content scroll-left" id="marquee2">
+                    <!-- Confirmado: usa scroll-left para movimiento de Derecha a Izquierda -->
+                    <div class="marquee-content scroll-left" id="marquee2"> 
                         <!-- JS insertará imágenes -->
                     </div>
                 </div>
@@ -540,11 +547,107 @@
             container.innerHTML = html;
         }
 
-        // Inicializar
+        // --- Lógica de Arrastre (Drag/Swipe) para Carruseles ---
+
+        // Variables de estado global para el arrastre
+        let isDragging = false;
+        let startX = 0;
+        let startTransformX = 0;
+        let activeMarquee = null;
+        let originalAnimationClass = '';
+
+        // Función para obtener el valor actual de translateX
+        function getTranslateX(element) {
+            const style = window.getComputedStyle(element);
+            const matrix = style.transform;
+            if (matrix && matrix !== 'none') {
+                // Obtener los valores de la matriz de transformación
+                const matrixValues = matrix.match(/matrix.*\((.+)\)/);
+                if (matrixValues && matrixValues[1]) {
+                    const values = matrixValues[1].split(', ').map(parseFloat);
+                    // translateX es el 5º valor (índice 4)
+                    return values[4] || 0; 
+                }
+            }
+            return 0;
+        }
+
+        // Evento de inicio de arrastre (MouseDown o TouchStart)
+        function handleStart(e, marqueeElement) {
+            // Evita el comportamiento de arrastre de la imagen en navegadores
+            e.preventDefault(); 
+            isDragging = true;
+            activeMarquee = marqueeElement;
+            originalAnimationClass = activeMarquee.classList.contains('scroll-left') ? 'scroll-left' : 'scroll-right';
+
+            // Pausar la animación CSS y eliminar la clase para aplicar transform manualmente
+            activeMarquee.style.animationPlayState = 'paused';
+            activeMarquee.classList.remove('scroll-left', 'scroll-right');
+            
+            // Obtener el punto de inicio X y el valor de traducción actual
+            startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+            startTransformX = getTranslateX(activeMarquee);
+            
+            activeMarquee.style.cursor = 'grabbing';
+            // Previene que se dispare el evento touchMove si no se mueve
+            activeMarquee.style.touchAction = 'none'; 
+        }
+
+        // Evento de movimiento (MouseMove o TouchMove)
+        function handleMove(e) {
+            if (!isDragging || !activeMarquee) return;
+            
+            const currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+            const dx = currentX - startX;
+            
+            // Aplicar la traducción manual (start + delta)
+            activeMarquee.style.transform = `translateX(${startTransformX + dx}px)`;
+        }
+
+        // Evento de finalización (MouseUp, TouchEnd o TouchCancel)
+        function handleEnd() {
+            if (!isDragging || !activeMarquee) return;
+
+            isDragging = false;
+
+            // Para que la animación retome su ciclo natural, debemos quitar el 'transform' explícito.
+            // Esto causará un pequeño salto al punto donde la animación debería estar, pero
+            // garantiza que el bucle infinito continúe.
+            activeMarquee.style.transform = ''; 
+
+            // Reanudar la animación y reestablecer la clase original
+            activeMarquee.classList.add(originalAnimationClass);
+            activeMarquee.style.animationPlayState = 'running';
+            
+            activeMarquee.style.cursor = 'grab';
+            activeMarquee.style.touchAction = 'pan-y'; // Reestablecer touch-action
+            activeMarquee = null;
+        }
+
+
+        // Inicializar el script en DOMContentLoaded
         document.addEventListener('DOMContentLoaded', () => {
+            // 1. Inicializar la data de los carruseles
             fillMarquee('marquee1', images1);
             fillMarquee('marquee2', images2);
             fillMarquee('marquee3', images3);
+
+            // 2. Adjuntar los listeners de arrastre a los carruseles
+            const marquees = document.querySelectorAll('.marquee-content');
+            marquees.forEach(marquee => {
+                // Eventos de ratón
+                marquee.addEventListener('mousedown', (e) => handleStart(e, marquee));
+                // Eventos táctiles
+                marquee.addEventListener('touchstart', (e) => handleStart(e, marquee));
+                marquee.style.cursor = 'grab';
+            });
+
+            // Listeners globales para el movimiento y finalización del arrastre
+            document.addEventListener('mousemove', handleMove);
+            document.addEventListener('mouseup', handleEnd);
+            document.addEventListener('touchmove', handleMove);
+            document.addEventListener('touchend', handleEnd);
+            document.addEventListener('touchcancel', handleEnd);
         });
 
     </script>
