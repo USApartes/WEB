@@ -3,653 +3,449 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>USA Partes - Repuestos y Servicios</title>
-    <!-- Tailwind CSS -->
+    <title>USA Partes - Repuestos y Soluciones</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        usaBlue: '#1B71B8',
-                        usaDarkBlue1: '#124B79',
-                        usaDarkBlue2: '#135190',
-                        usaRed: '#A91920',
-                        usaBrightRed: '#FF0000',
-                    },
-                    fontFamily: {
-                        sans: ['Roboto', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
     <style>
-        /* Fondo fijo (La imagen de la carretera es visible en toda la navegación) */
+        :root {
+            --color-1: #1B71B8;
+            --color-2: #124B79;
+            --color-3: #A91920;
+            --color-4: #135190;
+            --color-5: #FF0000;
+        }
+
         body {
             background-image: url('https://i.imgur.com/cb7hpJA.jpeg');
             background-attachment: fixed;
             background-size: cover;
             background-position: center;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400; /* Montserrat Normal por defecto */
+            color: #000;
         }
 
-        /* Estilos base para acordeones */
-        .accordion-content {
-            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, padding 0.3s ease;
-            max-height: 0;
-            opacity: 0;
+        /* Estilos de Texto según solicitud */
+        .titulo-resaltado {
+            font-weight: 700;
+            font-style: italic; /* Montserrat Negrita Cursiva */
+        }
+
+        .texto-normal {
+            font-weight: 400;
+            font-style: normal; /* Montserrat Normal */
+        }
+
+        /* Aplicación Global a Encabezados */
+        h1, h2, h3, .accordion-header, .resaltar, .font-bold {
+            font-weight: 700 !important;
+            font-style: italic !important;
+        }
+
+        /* Transparencias */
+        .glass-white-50 {
+            background-color: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .glass-black-50 {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        /* Acordeones */
+        .accordion-item {
+            margin-bottom: 15px;
+            border-radius: 12px;
             overflow: hidden;
-            /* MODIFICADO: Fondo de contenido al 50% de opacidad (50% de transparencia) */
-            background-color: rgba(255, 255, 255, 0.50); 
-        }
-        .accordion-content.open {
-            opacity: 1;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
-        /* Animaciones para Marquees (Carruseles continuos) */
-        @keyframes scroll-left {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); } 
-        }
-        @keyframes scroll-right {
-            0% { transform: translateX(-50%); }
-            100% { transform: translateX(0); }
-        }
-
-        .marquee-container {
-            overflow: hidden;
-            white-space: nowrap;
-            display: flex;
-        }
-        
-        .marquee-content {
-            display: flex;
-            /* Aumento de velocidad (de 40s a 25s) */
-            animation-duration: 25s; 
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-            touch-action: pan-y; /* Permite arrastre horizontal, evita scroll vertical */
-            user-select: none;
-        }
-
-        .scroll-left {
-            /* Carrusel 2 (Partes que Vendemos) - Mueve de Derecha a Izquierda */
-            animation-name: scroll-left; 
-        }
-        
-        .scroll-right {
-            /* Carrusel 1 y 3 (Marcas y Proveedores) - Mueve de Izquierda a Derecha */
-            animation-name: scroll-right;
-        }
-        
-        /* Ajuste de imágenes en marquee */
-        .marquee-item {
-            display: inline-block;
-            height: 200px; 
-            width: auto;
-            flex-shrink: 0;
-            object-fit: contain;
-            pointer-events: none; /* Previene el comportamiento de arrastre por defecto en imágenes */
-        }
-        
-        /* Botón flotante */
-        .floating-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 50;
-            transition: transform 0.2s;
-        }
-        .floating-btn:hover {
-            transform: scale(1.1);
-        }
-
-        /* Utilidad para remover estilos de boton por defecto en acordeones */
-        .accordion-trigger {
-            width: 100%;
-            text-align: left;
+        .accordion-header {
+            background-color: var(--color-1);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: background 0.3s;
+            text-transform: uppercase;
         }
+
+        .accordion-header:hover {
+            background-color: var(--color-2);
+        }
+
+        .sub-accordion-header {
+            background-color: var(--color-4);
+            padding: 12px 20px;
+            font-size: 0.85em;
+        }
+
+        .accordion-content {
+            display: none;
+            padding: 25px;
+        }
+
+        .accordion-item.active > .accordion-content {
+            display: block;
+        }
+
+        /* Carruseles Gigantes */
+        .carousel-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            cursor: grab;
+            padding: 10px 0;
+        }
+
+        .carousel-container::-webkit-scrollbar { display: none; }
+
+        .carousel-track { display: flex; align-items: center; }
+
+        .carousel-track img {
+            height: 160px; /* Doble tamaño */
+            width: auto;
+            display: block;
+            margin: 0;
+            padding: 0;
+            flex-shrink: 0;
+        }
+
+        /* Videos Estilo GIF */
+        video.gif-style {
+            width: 100%;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+
+        /* Botón Flotante Gigante */
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .floating-btn img {
+            width: 130px; /* Doble tamaño */
+            height: 130px;
+            transition: transform 0.3s;
+        }
+
+        .floating-btn img:hover { transform: scale(1.1); }
+
+        .note { color: var(--color-3); }
+
+        /* Estilo para los textos de los métodos de pago/despacho */
+        .p-text { margin-bottom: 15px; }
+
     </style>
 </head>
-<body class="font-sans text-gray-800 min-h-screen flex flex-col items-center">
+<body>
 
-    <!-- CONTENEDOR PRINCIPAL (Sin fondo para dejar ver la imagen de body) -->
-    <div class="w-full max-w-4xl shadow-2xl min-h-screen pb-20">
+    <!-- Logo Superior Centrado -->
+    <div class="flex justify-center py-10">
+        <div class="glass-white-50 p-6 rounded-3xl shadow-xl">
+            <img src="https://i.imgur.com/KTKKpbQ.png" alt="Logo USA Partes" class="max-w-[280px] h-auto">
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 max-w-4xl pb-40">
         
-        <!-- CABECERA (Fondo Blanco 50% Opacidad - Ajustado) -->
-        <header class="py-6 flex justify-center">
-            <div class="bg-white/50 p-4 rounded-lg shadow-xl">
-                <img src="https://i.imgur.com/KTKKpbQ.png" alt="[Logo de USA Partes]" class="h-24 object-contain drop-shadow-lg">
+        <!-- 1. REPUTACIÓN -->
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                REPUTACIÓN <span>▼</span>
             </div>
-        </header>
+            <div class="accordion-content glass-white-50 texto-normal">
+                <div class="flex flex-col items-center">
+                    <a href="https://www.mercadolibre.com.ve/perfil/vendedor/USA%2520PARTES" target="_blank" class="w-full">
+                        <img src="https://i.imgur.com/YkNT49d.png" alt="Mercado Libre" class="w-full h-auto mb-2">
+                    </a>
+                    <video class="gif-style" autoplay loop muted playsinline>
+                        <source src="https://i.imgur.com/BbAA0TQ.mp4" type="video/mp4">
+                    </video>
 
-        <!-- ACORDEONES PRINCIPALES -->
-        <div class="p-4 space-y-4">
+                    <a href="https://maps.app.goo.gl/eVexEzhfDdJ8qr5E6" target="_blank" class="w-full mt-6">
+                        <img src="https://i.imgur.com/SFPDcKs.png" alt="Google Maps" class="w-full h-auto mb-2">
+                    </a>
+                    <video class="gif-style" autoplay loop muted playsinline>
+                        <source src="https://i.imgur.com/MG1D4iF.mp4" type="video/mp4">
+                    </video>
 
-            <!-- 1. ACORDEÓN: REPUTACIÓN -->
-            <div class="border border-gray-200 rounded-lg overflow-hidden bg-transparent shadow-xl">
-                <button onclick="toggleAccordion('acc1')" class="accordion-trigger p-4 bg-usaBlue text-white font-bold text-lg hover:bg-usaDarkBlue1 transition">
-                    <span>REPUTACIÓN</span>
-                    <svg class="w-6 h-6 transform transition-transform" id="icon-acc1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div id="acc1" class="accordion-content"> <!-- Ahora con 50% Opacidad -->
-                    <div class="p-4 flex flex-col items-center space-y-6">
-                        <!-- Imagen 1 -> MercadoLibre -->
-                        <a href="https://www.mercadolibre.com.ve/perfil/vendedor/USA%20PARTES" target="_blank" class="w-full max-w-md hover:opacity-90 transition">
-                            <img src="https://i.imgur.com/YkNT49d.png" alt="[Imagen de Reputación en MercadoLibre]" class="w-full rounded shadow-sm">
-                        </a>
-                        <!-- Video 1 - Comportamiento tipo GIF: autoplay, muted, loop, playsinline, sin controls -->
-                        <div class="w-full max-w-md">
-                            <video autoplay muted loop playsinline class="w-full rounded shadow-sm">
-                                <source src="https://i.imgur.com/BbAA0TQ.mp4" type="video/mp4">
-                                Tu navegador no soporta videos.
-                            </video>
-                        </div>
-                        <!-- Imagen 2 -> Maps -->
-                        <a href="https://maps.app.goo.gl/eVexEzhfDdJ8qr5E6" target="_blank" class="w-full max-w-md hover:opacity-90 transition">
-                            <img src="https://i.imgur.com/SFPDcKs.png" alt="[Imagen de Ubicación en Google Maps]" class="w-full rounded shadow-sm">
-                        </a>
-                        <!-- Video 2 - Comportamiento tipo GIF: autoplay, muted, loop, playsinline, sin controls -->
-                        <div class="w-full max-w-md">
-                            <video autoplay muted loop playsinline class="w-full rounded shadow-sm">
-                                <source src="https://i.imgur.com/MG1D4iF.mp4" type="video/mp4">
-                                Tu navegador no soporta videos.
-                            </video>
-                        </div>
-                        <!-- Imagen 3 -> Facebook -->
-                        <a href="https://www.facebook.com/marketplace/profile/100056358948420/?ref=share_attachment" target="_blank" class="w-full max-w-md hover:opacity-90 transition">
-                            <img src="https://i.imgur.com/qtcjhFG.png" alt="[Imagen de Perfil de Facebook]" class="w-full rounded shadow-sm">
-                        </a>
-                        <!-- Video 3 - Comportamiento tipo GIF: autoplay, muted, loop, playsinline, sin controls -->
-                        <div class="w-full max-w-md">
-                            <video autoplay muted loop playsinline class="w-full rounded shadow-sm">
-                                <source src="https://i.imgur.com/UgMM3wM.mp4" type="video/mp4">
-                                Tu navegador no soporta videos.
-                            </video>
-                        </div>
-                    </div>
+                    <a href="https://www.facebook.com/marketplace/profile/100056358948420/?ref=share_attachment" target="_blank" class="w-full mt-6">
+                        <img src="https://i.imgur.com/qtcjhFG.png" alt="Facebook Marketplace" class="w-full h-auto mb-2">
+                    </a>
+                    <video class="gif-style" autoplay loop muted playsinline>
+                        <source src="https://i.imgur.com/UgMM3wM.mp4" type="video/mp4">
+                    </video>
                 </div>
-            </div>
-
-            <!-- 2. ACORDEÓN: SOLICITAR PRESUPUESTO -->
-            <div class="border border-gray-200 rounded-lg overflow-hidden bg-transparent shadow-xl">
-                <button onclick="toggleAccordion('acc2')" class="accordion-trigger p-4 bg-usaBlue text-white font-bold text-lg hover:bg-usaDarkBlue1 transition">
-                    <span>SOLICITAR PRESUPUESTO</span>
-                    <svg class="w-6 h-6 transform transition-transform" id="icon-acc2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div id="acc2" class="accordion-content"> <!-- Ahora con 50% Opacidad -->
-                    <div class="p-6 flex flex-col items-center text-left space-y-4">
-                        <ul class="list-disc list-inside space-y-2 text-gray-700 w-full max-w-2xl">
-                            <li>Presupuesto sin compromiso.</li>
-                            <li>No cobramos por realizar cotizaciones.</li>
-                            <li>Tenga a la mano sus datos de contacto, la información del vehículo y los detalles de hasta 4 repuestos que necesite.</li>
-                            <li>Recomendamos tener a la mano también el serial del chasis que puede conseguirlo en su carnet de circulación y consta de 17 dígitos alfanuméricos. (No es obligatorio pero ayuda en la mayoría de las cotizaciones a determinar las partes exactas que su vehículo necesita).</li>
-                            <li class="font-semibold text-usaDarkBlue1">USA Partes © se compromete a resguardar su información personal y la de su vehículo.</li>
-                        </ul>
-                        <!-- Botón COTIZAR YA -->
-                        <a href="https://form.jotform.com/223286368660059" target="_blank" class="mt-4 hover:scale-105 transition-transform">
-                            <img src="https://i.imgur.com/Ftg2qOu.jpeg" alt="[Imagen de Botón COTIZAR YA]" class="max-w-[200px] rounded shadow-lg">
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3. ACORDEÓN: MÉTODOS DE DESPACHO -->
-            <div class="border border-gray-200 rounded-lg overflow-hidden bg-transparent shadow-xl">
-                <button onclick="toggleAccordion('acc3')" class="accordion-trigger p-4 bg-usaBlue text-white font-bold text-lg hover:bg-usaDarkBlue1 transition">
-                    <span>MÉTODOS DE DESPACHO</span>
-                    <svg class="w-6 h-6 transform transition-transform" id="icon-acc3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div id="acc3" class="accordion-content"> <!-- Ahora con 50% Opacidad -->
-                    <div class="p-4 space-y-3">
-                        
-                        <!-- Sub-Acordeón 1: RETIRO EN TIENDA (Fondo 25% opaco para mejor contraste) -->
-                        <div class="bg-white/25 rounded border border-gray-300 overflow-hidden">
-                            <button onclick="toggleAccordion('sub_acc1')" class="accordion-trigger p-3 bg-usaDarkBlue2 text-white font-medium hover:bg-usaBlue transition">
-                                <span>RETIRO EN TIENDA</span>
-                                <svg class="w-5 h-5 transform transition-transform" id="icon-sub_acc1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-                            <div id="sub_acc1" class="accordion-content">
-                                <div class="p-4 flex flex-col items-center text-center space-y-3">
-                                    <p class="text-gray-700">No somos tienda física, así que no ofrecemos retiros en tienda. Contamos con una oficina para nuestro personal, 2 almacenes y cientos de proveedores que nos permiten realizar despachos directamente desde sus instalaciones hasta tus manos.</p>
-                                    <p class="text-gray-700 font-medium">Es por eso que contamos con delivery a toda Caracas sin costo adicional y envíos nacionales totalmente gratis.</p>
-                                    <img src="https://i.imgur.com/mZyr0od.jpeg" alt="[Imagen de Información sobre Retiro en Tienda]" class="w-full max-w-md rounded mt-2">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Sub-Acordeón 2: DELIVERY -->
-                        <div class="bg-white/25 rounded border border-gray-300 overflow-hidden">
-                            <button onclick="toggleAccordion('sub_acc2')" class="accordion-trigger p-3 bg-usaDarkBlue2 text-white font-medium hover:bg-usaBlue transition">
-                                <span>DELIVERY</span>
-                                <svg class="w-5 h-5 transform transition-transform" id="icon-sub_acc2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-                            <div id="sub_acc2" class="accordion-content">
-                                <div class="p-4 flex flex-col items-center text-center space-y-3">
-                                    <ul class="list-disc list-inside text-gray-700">
-                                        <li>Solo para la Gran Caracas</li>
-                                        <li>Envios totalmente GRATIS</li>
-                                        <li>Únicamente con la empresa YUMMY ®</li>
-                                        <li>Reciba en menos de 3 horas después de realizar su pedido.</li>
-                                    </ul>
-                                    <img src="https://i.imgur.com/ziPKcCo.png" alt="[Imagen de Logo Yummy Delivery]" class="w-full max-w-md rounded mt-2">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Sub-Acordeón 3: ENVÍOS NACIONALES -->
-                        <div class="bg-white/25 rounded border border-gray-300 overflow-hidden">
-                            <button onclick="toggleAccordion('sub_acc3')" class="accordion-trigger p-3 bg-usaDarkBlue2 text-white font-medium hover:bg-usaBlue transition">
-                                <span>ENVÍOS NACIONALES</span>
-                                <svg class="w-5 h-5 transform transition-transform" id="icon-sub_acc3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-                            <div id="sub_acc3" class="accordion-content">
-                                <div class="p-4 flex flex-col items-center text-center space-y-3">
-                                    <ul class="list-disc list-inside text-gray-700">
-                                        <li>Envíos totalmente GRATIS</li>
-                                        <li>Únicamente con la empresa ZOOM ®</li>
-                                        <li>Reciba en menos de 3 días hábiles después de realizar su pedido.</li>
-                                    </ul>
-                                    <img src="https://i.imgur.com/XmNya5Z.png" alt="[Imagen de Logo Zoom Envios]" class="w-full max-w-md rounded mt-2">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Sub-Acordeón 4: IMPORTACIONES -->
-                        <div class="bg-white/25 rounded border border-gray-300 overflow-hidden">
-                            <button onclick="toggleAccordion('sub_acc4')" class="accordion-trigger p-3 bg-usaDarkBlue2 text-white font-medium hover:bg-usaBlue transition">
-                                <span>IMPORTACIONES</span>
-                                <svg class="w-5 h-5 transform transition-transform" id="icon-sub_acc4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-                            <div id="sub_acc4" class="accordion-content">
-                                <div class="p-4 flex flex-col items-center text-center space-y-3">
-                                    <ul class="list-disc list-inside text-gray-700">
-                                        <li>Aplica para los casos en que no consigamos sus repuestos dentro de Venezuela.</li>
-                                        <li>Envíos totalmente GRATIS</li>
-                                        <li>Únicamente con la empresa DHL ®</li>
-                                        <li>Reciba en menos de 30 días contínuos después de realizar su pedido.</li>
-                                    </ul>
-                                    <img src="https://i.imgur.com/Kxq1XxI.png" alt="[Imagen de Logo DHL Importaciones]" class="w-full max-w-md rounded mt-2">
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4. ACORDEÓN: HORARIOS -->
-            <div class="border border-gray-200 rounded-lg overflow-hidden bg-transparent shadow-xl">
-                <button onclick="toggleAccordion('acc4')" class="accordion-trigger p-4 bg-usaBlue text-white font-bold text-lg hover:bg-usaDarkBlue1 transition">
-                    <span>HORARIOS</span>
-                    <svg class="w-6 h-6 transform transition-transform" id="icon-acc4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div id="acc4" class="accordion-content"> <!-- Ahora con 50% Opacidad -->
-                    <div class="p-4 space-y-6 flex flex-col items-center">
-                        <p class="font-bold text-center text-usaDarkBlue1 w-full">Todos los departamentos a continuación trabajan de LUNES a VIERNES en los siguientes horarios.</p>
-                        
-                        <!-- Bloque 1 -->
-                        <div class="text-center w-full max-w-md">
-                            <h4 class="font-bold text-lg text-usaRed mb-2">ATENCIÓN AL CLIENTE</h4>
-                            <p>Por Whatsapp: de 8:00am a 6:00pm</p>
-                            <p>Por Instagram: de 9:00am a 5:00pm</p>
-                            <p>Por Facebook: de 9:00am a 5:00pm</p>
-                            <img src="https://i.imgur.com/LAArB8r.png" alt="[Imagen de Horario de Atención al Cliente]" class="w-full mt-3 rounded shadow-sm">
-                        </div>
-
-                        <!-- Bloque 2 -->
-                        <div class="text-center w-full max-w-md">
-                            <h4 class="font-bold text-lg text-usaRed mb-2">RECEPCIÓN DE PEDIDOS</h4>
-                            <p>De Almacén: de 9:00am a 3:00pm</p>
-                            <p>De Proveedores: de 9:00am a 3:00pm</p>
-                            <p class="text-sm italic text-gray-500 mt-1">Nota: Todos los pedidos que haga después de las 3:00pm serán despachados al día siguiente.</p>
-                            <img src="https://i.imgur.com/h5ndbJ3.png" alt="[Imagen de Horario de Recepción de Pedidos]" class="w-full mt-3 rounded shadow-sm">
-                        </div>
-
-                        <!-- Bloque 3 -->
-                        <div class="text-center w-full max-w-md">
-                            <h4 class="font-bold text-lg text-usaRed mb-2">DESPACHOS POR DELIVERY</h4>
-                            <p>Desde Yummy: de 10:00am a 6:00pm</p>
-                            <p class="text-sm italic text-gray-500 mt-1">Nota: Si usted realizó su pedido antes de las 3:00pm su delivery podrá llegar antes de las 6:00pm</p>
-                            <img src="https://i.imgur.com/z0Y0Sg8.png" alt="[Imagen de Horario de Despachos por Delivery]" class="w-full mt-3 rounded shadow-sm">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 5. ACORDEÓN: MÉTODOS DE PAGO -->
-            <div class="border border-gray-200 rounded-lg overflow-hidden bg-transparent shadow-xl">
-                <button onclick="toggleAccordion('acc5')" class="accordion-trigger p-4 bg-usaBlue text-white font-bold text-lg hover:bg-usaDarkBlue1 transition">
-                    <span>MÉTODOS DE PAGO</span>
-                    <svg class="w-6 h-6 transform transition-transform" id="icon-acc5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div id="acc5" class="accordion-content"> <!-- Ahora con 50% Opacidad -->
-                    <div class="p-4 space-y-8 flex flex-col items-center">
-                        
-                        <!-- PAGOMOVIL -->
-                        <div class="w-full max-w-md text-center">
-                            <h4 class="font-bold text-lg text-usaDarkBlue1 mb-2">PAGOMOVIL</h4>
-                            <ul class="list-disc list-inside text-left text-sm text-gray-700 space-y-1 mb-2">
-                                <li>Cobramos los montos expresados en los presupuestos a tasa BCV Oficial.</li>
-                                <li>El pago debe ser realizado previo al despacho.</li>
-                            </ul>
-                            <p class="text-xs text-red-600 font-bold mb-3">Nota: No aceptamos Pagomovil al momento del despacho.</p>
-                            <img src="https://i.imgur.com/fcZ7AQ6.png" alt="[Imagen de Logo Pagomovil]" class="w-full rounded shadow-sm">
-                        </div>
-
-                        <!-- EFECTIVO -->
-                        <div class="w-full max-w-md text-center border-t pt-6">
-                            <h4 class="font-bold text-lg text-usaDarkBlue1 mb-2">EFECTIVO</h4>
-                            <div class="text-left text-sm text-gray-700 space-y-2 mb-3">
-                                <p>- Los montos expresados en los presupuestos son en USD, es por ello que para pagos en efectivo sólo aceptamos Bolívares (Cuya conversión sea exacta según la tasa oficial de BCV) ó en su defecto Dólares en montos exactos.</p>
-                                <p>- No enviamos motorizados con cambio, así que agradecemos que prepare su pago en efectivo con la cantidad exacta.</p>
-                                <p>- Cualquier cambio será realizado en Bolívares a tasa oficial del Banco Central de Venezuela.</p>
-                                <p>- Este método de pago aplica sólo para usuarios en Caracas, Venezuela.</p>
-                                <p>- Al momento de indicarle al asesor de venta que desea pagar su pedido con efectivo, este procederá a solicitarle una foto de los billetes donde se aprecian los seriales y encima su cédula de identidad. Esto para garantizar el compromiso de pago y la movilización de nuestro personal.</p>
-                                <p class="font-bold text-usaDarkBlue1">- USA PARTES © se compromete a resguardar su información personal. Todas nuestras solicitudes son para fines contables y de seguridad.</p>
-                            </div>
-                            <img src="https://i.imgur.com/tu5GdVv.png" alt="[Imagen de Efectivo]" class="w-full rounded shadow-sm">
-                        </div>
-
-                        <!-- BINANCE -->
-                        <div class="w-full max-w-md text-center border-t pt-6">
-                            <h4 class="font-bold text-lg text-usaDarkBlue1 mb-2">BINANCE</h4>
-                            <ul class="list-disc list-inside text-left text-sm text-gray-700 space-y-1 mb-2">
-                                <li>El pago debe ser realizado previo al despacho.</li>
-                                <li>Tanto el cliente como USA Partes deben tener cuenta activa en Binance.</li>
-                            </ul>
-                            <p class="text-xs text-red-600 font-bold mb-3">Nota: No aceptamos pagos por Binance al momento del despacho.</p>
-                            <img src="https://i.imgur.com/QFnzsOH.png" alt="[Imagen de Logo Binance]" class="w-full rounded shadow-sm">
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-        </div> <!-- Fin de Acordeones -->
-
-        <!-- SECCIÓN DE CARRUSELES (MARQUEES) -->
-        <div class="bg-transparent py-8 space-y-8 overflow-hidden">
-            
-            <!-- 1. MARCAS QUE ATENDEMOS (Izquierda a Derecha) -->
-            <div>
-                <!-- Banner de Título (Fondo 95% Opaco para legibilidad, Texto oscuro) -->
-                <h3 class="text-center font-bold text-xl mb-4 p-2 bg-white/95 text-usaDarkBlue1 mx-4 rounded-lg shadow-md">MARCAS QUE ATENDEMOS:</h3>
-                <div class="marquee-container">
-                    <div class="marquee-content scroll-right" id="marquee1">
-                        <!-- Las imágenes se insertarán vía JS para facilitar duplicación -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- 2. PARTES QUE VENDEMOS (Derecha a Izquierda) -->
-            <div>
-                <!-- Banner de Título (Fondo 95% Opaco para legibilidad, Texto oscuro) -->
-                <h3 class="text-center font-bold text-xl mb-4 p-2 bg-white/95 text-usaDarkBlue1 mx-4 rounded-lg shadow-md">PARTES QUE VENDEMOS:</h3>
-                <div class="marquee-container">
-                    <!-- Confirmado: usa scroll-left para movimiento de Derecha a Izquierda -->
-                    <div class="marquee-content scroll-left" id="marquee2"> 
-                        <!-- JS insertará imágenes -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3. PROVEEDORES QUE TENEMOS (Izquierda a Derecha) -->
-            <div>
-                <!-- Banner de Título (Fondo 95% Opaco para legibilidad, Texto oscuro) -->
-                <h3 class="text-center font-bold text-xl mb-4 p-2 bg-white/95 text-usaDarkBlue1 mx-4 rounded-lg shadow-md">PROVEEDORES QUE TENEMOS:</h3>
-                <div class="marquee-container">
-                    <div class="marquee-content scroll-right" id="marquee3">
-                        <!-- JS insertará imágenes -->
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- SIGUENOS EN (Fondo Transparente) -->
-        <div class="py-8 bg-transparent text-center">
-            <!-- Banner de Título (Fondo 95% Opaco para legibilidad, Texto oscuro) -->
-            <h3 class="font-bold text-xl mb-6 p-2 bg-white/95 text-usaDarkBlue1 mx-4 rounded-lg shadow-md">SIGUENOS EN:</h3>
-            <div class="flex justify-center flex-wrap">
-                <!-- Facebook -->
-                <a href="https://www.facebook.com/usapartesoficial/" target="_blank" class="block hover:opacity-80 transition"><img src="https://i.imgur.com/JnFuCLA.png" class="h-16 md:h-20 w-auto mx-0" alt="[Logo de Facebook]"></a>
-                <!-- Whatsapp -->
-                <a href="https://wa.me/message/7QKUNZX2XHPNI1" target="_blank" class="block hover:opacity-80 transition"><img src="https://i.imgur.com/kIt0fAu.png" class="h-16 md:h-20 w-auto mx-0" alt="[Logo de WhatsApp]"></a>
-                <!-- Instagram -->
-                <a href="https://www.instagram.com/usapartes" target="_blank" class="block hover:opacity-80 transition"><img src="https://i.imgur.com/4OKbwqP.png" class="h-16 md:h-20 w-auto mx-0" alt="[Logo de Instagram]"></a>
-                <!-- Twitter -->
-                <a href="https://twitter.com/UsaPartes" target="_blank" class="block hover:opacity-80 transition"><img src="https://i.imgur.com/Lu39ntU.png" class="h-16 md:h-20 w-auto mx-0" alt="[Logo de Twitter]"></a>
-                <!-- TikTok -->
-                <a href="https://tiktok.com/@usapartes" target="_blank" class="block hover:opacity-80 transition"><img src="https://i.imgur.com/w3CoZw6.png" class="h-16 md:h-20 w-auto mx-0" alt="[Logo de TikTok]"></a>
             </div>
         </div>
 
-        <!-- COPYRIGHT -->
-        <footer class="bg-gray-800/90 text-white text-center py-6">
-            <p>&copy; 2026 USA Partes™. Todos los derechos reservados.</p>
-        </footer>
+        <!-- 2. SOLICITAR PRESUPUESTO -->
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                SOLICITAR PRESUPUESTO <span>▼</span>
+            </div>
+            <div class="accordion-content glass-white-50 texto-normal">
+                <div class="p-text">
+                    <p>-Presupuesto sin compromiso</p>
+                    <p>-No cobramos por realizar cotizaciones</p>
+                    <p>-Tenga a la mano sus datos de contacto, la información del vehículo y los detalles de hasta 4 repuestos que necesite.</p>
+                    <p>-Recomendamos tener a la mano también el serial del chasis que puede conseguirlo en su carnet de circulación y consta de 17 dígitos alfanuméricos. <span class="italic text-xs">(No es obligatorio pero ayuda en la mayoría de las cotizaciones a determinar las partes exactas que su vehículo necesita)</span></p>
+                    <p class="resaltar mt-4">USA Partes © se compromete a resguardar su información personal y la de su vehículo.</p>
+                    
+                    <div class="mt-8 text-center">
+                        <a href="https://form.jotform.com/223286368660059" target="_blank" class="bg-[#A91920] text-white px-12 py-5 rounded-full titulo-resaltado text-xl hover:bg-red-700 transition shadow-2xl inline-block">
+                            COTIZAR YA
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    </div> <!-- Fin Container Principal -->
+        <!-- 3. MÉTODOS DE DESPACHO -->
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                MÉTODOS DE DESPACHO <span>▼</span>
+            </div>
+            <div class="accordion-content glass-white-50 p-4 texto-normal">
+                
+                <!-- Sub 1: RETIRO -->
+                <div class="accordion-item bg-transparent shadow-none border border-blue-300">
+                    <div class="accordion-header sub-accordion-header" onclick="toggleAccordion(this)">
+                        RETIRO EN TIENDA <span>▼</span>
+                    </div>
+                    <div class="accordion-content bg-transparent">
+                        <p class="p-text">-No somos tienda física, así que no ofrecemos retiros en tienda. Contamos con una oficina para nuestro personal, 2 almacenes y cientos de proveedores que nos permiten realizar despachos directamente desde sus instalaciones hasta tus manos.</p>
+                        <p class="resaltar">-Es por eso que contamos con delivery a toda Caracas sin costo adicional y envíos nacionales totalmente gratis.</p>
+                        <img src="https://i.imgur.com/mZyr0od.jpeg" class="w-full rounded-xl mt-4">
+                    </div>
+                </div>
 
-    <!-- BOTÓN FLOTANTE WHATSAPP (Aumentado 150%) -->
+                <!-- Sub 2: DELIVERY -->
+                <div class="accordion-item bg-transparent shadow-none border border-blue-300">
+                    <div class="accordion-header sub-accordion-header" onclick="toggleAccordion(this)">
+                        DELIVERY <span>▼</span>
+                    </div>
+                    <div class="accordion-content bg-transparent">
+                        <p class="p-text">-Solo para la Gran Caracas<br>-Envios totalmente GRATIS<br>-Únicamente con la empresa YUMMY ®<br>-Reciba en menos de 3 horas después de realizar su pedido.</p>
+                        <img src="https://i.imgur.com/ziPKcCo.png" class="w-full rounded-xl mt-4">
+                    </div>
+                </div>
+
+                <!-- Sub 3: NACIONALES -->
+                <div class="accordion-item bg-transparent shadow-none border border-blue-300">
+                    <div class="accordion-header sub-accordion-header" onclick="toggleAccordion(this)">
+                        ENVÍOS NACIONALES <span>▼</span>
+                    </div>
+                    <div class="accordion-content bg-transparent">
+                        <p class="p-text">-Envíos totalmente GRATIS<br>-Únicamente con la empresa ZOOM ®<br>-Reciba en menos de 3 días hábiles después de realizar su pedido.</p>
+                        <img src="https://i.imgur.com/XmNya5Z.png" class="w-full rounded-xl mt-4">
+                    </div>
+                </div>
+
+                <!-- Sub 4: IMPORTACIONES -->
+                <div class="accordion-item bg-transparent shadow-none border border-blue-300">
+                    <div class="accordion-header sub-accordion-header" onclick="toggleAccordion(this)">
+                        IMPORTACIONES <span>▼</span>
+                    </div>
+                    <div class="accordion-content bg-transparent">
+                        <p class="p-text">-Aplica para los casos en que no consigamos sus repuestos dentro de Venezuela.<br>-Envíos totalmente GRATIS<br>-Únicamente con la empresa DHL ®<br>-Reciba en menos de 30 días contínuos después de realizar su pedido.</p>
+                        <img src="https://i.imgur.com/Kxq1XxI.png" class="w-full rounded-xl mt-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. HORARIOS -->
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                HORARIOS <span>▼</span>
+            </div>
+            <div class="accordion-content glass-white-50 texto-normal">
+                <p class="resaltar text-center underline uppercase mb-6">Todos los departamentos trabajan de LUNES a VIERNES.</p>
+                
+                <div class="mb-8">
+                    <p class="titulo-resaltado text-[#1B71B8]">-ATENCIÓN AL CLIENTE</p>
+                    <p>Whatsapp: 8am-6pm | Instagram: 9am-5pm | Facebook: 9am-5pm</p>
+                    <img src="https://i.imgur.com/LAArB8r.png" class="w-full rounded-xl mt-4">
+                </div>
+
+                <div class="mb-8">
+                    <p class="titulo-resaltado text-[#1B71B8]">-RECEPCIÓN DE PEDIDOS</p>
+                    <p>Almacén: 9am-3pm | Proveedores: 9am-3pm</p>
+                    <p class="note resaltar text-sm mt-1">Nota: Pedidos después de las 3:00pm se despachan al día siguiente.</p>
+                    <img src="https://i.imgur.com/h5ndbJ3.png" class="w-full rounded-xl mt-4">
+                </div>
+
+                <div>
+                    <p class="titulo-resaltado text-[#1B71B8]">-DESPACHOS POR DELIVERY</p>
+                    <p>Yummy: 10am-6pm</p>
+                    <p class="note resaltar text-sm mt-1">Nota: Si pidió antes de las 3:00pm llegará el mismo día antes de las 6:00pm.</p>
+                    <img src="https://i.imgur.com/z0Y0Sg8.png" class="w-full rounded-xl mt-4">
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. MÉTODOS DE PAGO -->
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                MÉTODOS DE PAGO <span>▼</span>
+            </div>
+            <div class="accordion-content glass-white-50 texto-normal space-y-12">
+                <div>
+                    <p class="titulo-resaltado text-xl text-[#124B79]">PAGOMOVIL</p>
+                    <p>-Cobramos los montos a tasa BCV Oficial. Pago previo al despacho.</p>
+                    <p class="note resaltar text-sm mt-1 italic">Nota: No aceptamos Pagomovil al momento del despacho.</p>
+                    <img src="https://i.imgur.com/fcZ7AQ6.png" class="w-full rounded-xl mt-4">
+                </div>
+
+                <div>
+                    <p class="titulo-resaltado text-xl text-[#124B79]">EFECTIVO</p>
+                    <div class="space-y-3 mt-2">
+                        <p>-Bolívares (Tasa BCV) o Dólares exactos.</p>
+                        <p>-No enviamos cambio. Prepare su pago exacto.</p>
+                        <p>-Vueltos solo en Bolívares tasa oficial BCV.</p>
+                        <p>-Solo disponible para Caracas.</p>
+                        <p>-Se solicita foto de billetes y cédula previo al despacho.</p>
+                        <p class="resaltar text-xs mt-2 uppercase">USA PARTES © resguarda su información personal.</p>
+                    </div>
+                    <img src="https://i.imgur.com/tu5GdVv.png" class="w-full rounded-xl mt-4">
+                </div>
+
+                <div>
+                    <p class="titulo-resaltado text-xl text-[#124B79]">BINANCE</p>
+                    <p>-El pago debe ser realizado previo al despacho.</p>
+                    <p class="note resaltar text-sm mt-1 italic">Nota: No aceptamos Binance al momento del despacho.</p>
+                    <img src="https://i.imgur.com/QFnzsOH.png" class="w-full rounded-xl mt-4">
+                </div>
+            </div>
+        </div>
+
+        <!-- CARRUSEL 1: MARCAS -->
+        <div class="mt-20">
+            <h3 class="glass-black-50 text-white text-center py-4 tracking-widest text-sm titulo-resaltado">MARCAS QUE ATENDEMOS:</h3>
+            <div class="carousel-container">
+                <div class="carousel-track">
+                    <img src="https://i.imgur.com/7719dp7.png"><img src="https://i.imgur.com/KWgptf1.png"><img src="https://i.imgur.com/dZf8y07.png"><img src="https://i.imgur.com/KCXs5Ps.png"><img src="https://i.imgur.com/N26o8bb.png"><img src="https://i.imgur.com/sbDfhHW.png"><img src="https://i.imgur.com/DHDk3O4.png"><img src="https://i.imgur.com/nFOHnPA.png"><img src="https://i.imgur.com/rzBT3YC.png"><img src="https://i.imgur.com/JQKPoXG.png"><img src="https://i.imgur.com/xUxz3Bs.png"><img src="https://i.imgur.com/qwCy8YE.png"><img src="https://i.imgur.com/LyNk1vv.png"><img src="https://i.imgur.com/wVN2wvs.png"><img src="https://i.imgur.com/8G9XWNu.png"><img src="https://i.imgur.com/70B5Ecl.png"><img src="https://i.imgur.com/d6J3zpR.png"><img src="https://i.imgur.com/c7RtfmH.png"><img src="https://i.imgur.com/MfyZ5Xm.png"><img src="https://i.imgur.com/XtfdnwR.png"><img src="https://i.imgur.com/z4X4bmg.png"><img src="https://i.imgur.com/8nipqVy.png"><img src="https://i.imgur.com/0mECFM6.png"><img src="https://i.imgur.com/OiWkLsD.png"><img src="https://i.imgur.com/CvxPKOg.png"><img src="https://i.imgur.com/dknGRiE.png"><img src="https://i.imgur.com/YfoRFwv.png"><img src="https://i.imgur.com/snCnzx2.png"><img src="https://i.imgur.com/2mFSTnx.png"><img src="https://i.imgur.com/UXuNCXw.png"><img src="https://i.imgur.com/tGKap8v.png"><img src="https://i.imgur.com/hELXOav.png"><img src="https://i.imgur.com/aUYHy8w.png"><img src="https://i.imgur.com/dXA54U5.png">
+                </div>
+            </div>
+        </div>
+
+        <!-- CARRUSEL 2: PARTES -->
+        <div class="mt-12">
+            <h3 class="glass-black-50 text-white text-center py-4 tracking-widest text-sm titulo-resaltado">PARTES QUE VENDEMOS:</h3>
+            <div class="carousel-container">
+                <div class="carousel-track">
+                    <img src="https://i.imgur.com/26ITY5j.png"><img src="https://i.imgur.com/Opcq3Sg.png"><img src="https://i.imgur.com/VkrSuXO.png"><img src="https://i.imgur.com/6kAUkl6.png"><img src="https://i.imgur.com/n684yHn.png"><img src="https://i.imgur.com/vi8lGSX.png"><img src="https://i.imgur.com/irKTt3W.png"><img src="https://i.imgur.com/W23gnuk.png"><img src="https://i.imgur.com/hhpZH95.png"><img src="https://i.imgur.com/gOI9dA7.png"><img src="https://i.imgur.com/2B07UC0.png"><img src="https://i.imgur.com/HkJGFuR.png"><img src="https://i.imgur.com/kEV5r17.png"><img src="https://i.imgur.com/IIS9Wvv.png"><img src="https://i.imgur.com/yJ7H1o5.png"><img src="https://i.imgur.com/q6wbMaz.png">
+                </div>
+            </div>
+        </div>
+
+        <!-- CARRUSEL 3: PROVEEDORES -->
+        <div class="mt-12">
+            <h3 class="glass-black-50 text-white text-center py-4 tracking-widest text-sm titulo-resaltado">PROVEEDORES QUE TENEMOS:</h3>
+            <div class="carousel-container">
+                <div class="carousel-track">
+                    <img src="https://i.imgur.com/xPxzVkt.png"><img src="https://i.imgur.com/fXkoaga.png"><img src="https://i.imgur.com/Zp3UwIn.png"><img src="https://i.imgur.com/emiyWRt.png"><img src="https://i.imgur.com/2qQ9tTy.png"><img src="https://i.imgur.com/GGIXJSu.png"><img src="https://i.imgur.com/M5y0Ca4.png"><img src="https://i.imgur.com/evjoI94.png"><img src="https://i.imgur.com/8rFuyiK.png"><img src="https://i.imgur.com/WfgsJeF.png"><img src="https://i.imgur.com/qVBqChk.png"><img src="https://i.imgur.com/c2gnJbt.png"><img src="https://i.imgur.com/LjXGx4c.png"><img src="https://i.imgur.com/P3c3E10.png"><img src="https://i.imgur.com/McrXP12.png"><img src="https://i.imgur.com/ByNVjcq.png"><img src="https://i.imgur.com/hyUBGB7.png"><img src="https://i.imgur.com/OSD6bLK.png">
+                </div>
+            </div>
+        </div>
+
+        <!-- TARJETA REDES -->
+        <div class="glass-white-50 p-10 rounded-[50px] shadow-2xl mt-24 text-center">
+            <h3 class="mb-10 text-[#124B79] text-2xl titulo-resaltado">SIGUENOS EN:</h3>
+            <div class="flex justify-center items-center flex-wrap gap-2">
+                <a href="https://www.facebook.com/usapartesoficial/" target="_blank"><img src="https://i.imgur.com/JnFuCLA.png" alt="FB" class="w-[70px]"></a>
+                <a href="https://wa.me/message/7QKUNZX2XHPNI1" target="_blank"><img src="https://i.imgur.com/kIt0fAu.png" alt="WA" class="w-[70px]"></a>
+                <a href="https://www.instagram.com/usapartes" target="_blank"><img src="https://i.imgur.com/4OKbwqP.png" alt="IG" class="w-[70px]"></a>
+                <a href="https://twitter.com/UsaPartes" target="_blank"><img src="https://i.imgur.com/Lu39ntU.png" alt="X" class="w-[70px]"></a>
+                <a href="https://tiktok.com/@usapartes" target="_blank"><img src="https://i.imgur.com/w3CoZw6.png" alt="TK" class="w-[70px]"></a>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="glass-black-50 text-white text-center py-8 mt-20 rounded-2xl texto-normal">
+            <p>© 2026 USA Partes™. Todos los derechos reservados.</p>
+        </div>
+
+    </div>
+
+    <!-- BOTÓN FLOTANTE SOPORTE -->
     <a href="http://wa.me/584145294055" target="_blank" class="floating-btn">
-        <img src="https://i.imgur.com/9mRR6eX.png" alt="[Imagen de Botón de Chat de WhatsApp]" class="w-24 h-24 drop-shadow-lg">
+        <img src="https://i.imgur.com/9mRR6eX.png" alt="Operador USA Partes">
     </a>
 
-    <!-- SCRIPTS -->
     <script>
-        // --- Lógica de Acordeones ---
-        function toggleAccordion(id) {
-            const content = document.getElementById(id);
-            const icon = document.getElementById('icon-' + id);
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const isSub = header.classList.contains('sub-accordion-header');
             
-            // Determinar si es un sub-acordeón para manejar el cierre de hermanos
-            const isSub = id.startsWith('sub_acc');
-            
-            // Cerrar otros acordeones del mismo nivel
-            const allContents = document.querySelectorAll(isSub ? '[id^="sub_acc"]' : '[id^="acc"]:not([id^="sub"])');
-            
-            allContents.forEach(el => {
-                if (el.id !== id && el.classList.contains('open')) {
-                    el.style.maxHeight = null;
-                    el.classList.remove('open');
-                    // Resetear icono hermano
-                    const siblingIcon = document.getElementById('icon-' + el.id);
-                    if(siblingIcon) siblingIcon.classList.remove('rotate-180');
-                    // Padding reset
-                    el.style.paddingTop = '0';
-                    el.style.paddingBottom = '0';
-                }
-            });
-
-            // Toggle actual
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-                content.classList.remove('open');
-                icon.classList.remove('rotate-180');
-                if(!isSub) {
-                    content.style.paddingTop = '0';
-                    content.style.paddingBottom = '0';
-                }
+            // Cerrar hermanos
+            if (!isSub) {
+                document.querySelectorAll('.container > .accordion-item').forEach(i => {
+                    if (i !== item) {
+                        i.classList.remove('active');
+                        const s = i.querySelector('.accordion-header span');
+                        if(s) s.innerText = '▼';
+                    }
+                });
             } else {
-                // Calcular altura real incluyendo contenido interno
-                content.classList.add('open');
-                // Un pequeño delay para permitir que el display block calcule el scrollHeight
-                content.style.maxHeight = content.scrollHeight + 1000 + "px"; // +1000 buffer para acordeones anidados
-                icon.classList.add('rotate-180');
-                if(!isSub) {
-                    content.style.paddingTop = '1rem';
-                    content.style.paddingBottom = '1rem';
-                }
-            }
-            
-            // Si es un sub-acordeón, hay que recalcular la altura del padre
-            if (isSub) {
-                // El padre de un sub-acordeón es el div que tiene la clase bg-transparent
-                const parentAcc = content.closest('[id^="acc"]:not([id^="sub"])'); 
-                if (parentAcc) {
-                    // Recalcular la altura del padre si está abierto
-                    const newHeight = parentAcc.scrollHeight + content.scrollHeight + 50; 
-                    parentAcc.style.maxHeight = newHeight + "px";
-                }
-            }
-        }
-
-        // --- Lógica de Carruseles (Marquees) ---
-        
-        // Data de imágenes
-        const images1 = [
-            "https://i.imgur.com/7719dp7.png", "https://i.imgur.com/YT5MdOO.png", "https://i.imgur.com/dZf8y07.png", "https://i.imgur.com/KCXs5Ps.png",
-            "https://i.imgur.com/N26o8bb.png", "https://i.imgur.com/sbDfhHW.png", "https://i.imgur.com/DHDk3O4.png", "https://i.imgur.com/nFOHnPA.png",
-            "https://i.imgur.com/rzBT3YC.png", "https://i.imgur.com/JQKPoXG.png", "https://i.imgur.com/uXSghC3.png", "https://i.imgur.com/qwCy8YE.png",
-            "https://i.imgur.com/LyNk1vv.png", "https://i.imgur.com/wVN2wvs.png", "https://i.imgur.com/8G9XWNu.png", "https://i.imgur.com/70B5Ecl.png",
-            "https://i.imgur.com/d6J3zpR.png", "https://i.imgur.com/c7RtfmH.png", "https://i.imgur.com/MfyZ5Xm.png", "https://i.imgur.com/XtfdnwR.png",
-            "https://i.imgur.com/z4X4bmg.png", "https://i.imgur.com/8nipqVy.png", "https://i.imgur.com/0mECFM6.png", "https://i.imgur.com/OiWkLsD.png",
-            "https://i.imgur.com/CvxPKOg.png", "https://i.imgur.com/dknGRiE.png", "https://i.imgur.com/YfoRFwv.png", "https://i.imgur.com/snCnzx2.png",
-            "https://i.imgur.com/2mFSTnx.png", "https://i.imgur.com/UXuNCXw.png", "https://i.imgur.com/tGKap8v.png", "https://i.imgur.com/hELXOav.png",
-            "https://i.imgur.com/aUYHy8w.png", "https://i.imgur.com/dXA54U5.png"
-        ];
-
-        const images2 = [
-            "https://i.imgur.com/26ITY5j.png", "https://i.imgur.com/Opcq3Sg.png", "https://i.imgur.com/VkrSuXO.png", "https://i.imgur.com/6kAUkl6.png",
-            "https://i.imgur.com/n684yHn.png", "https://i.imgur.com/vi8lGSX.png", "https://i.imgur.com/irKTt3W.png", "https://i.imgur.com/W23gnuk.png",
-            "https://i.imgur.com/hhpZH95.png", "https://i.imgur.com/gOI9dA7.png", "https://i.imgur.com/2B07UC0.png", "https://i.imgur.com/HkJGFuR.png",
-            "https://i.imgur.com/kEV5r17.png", "https://i.imgur.com/IIS9Wvv.png", "https://i.imgur.com/yJ7H1o5.png", "https://i.imgur.com/q6wbMaz.png"
-        ];
-
-        const images3 = [
-            "https://i.imgur.com/xPxzVkt.png", "https://i.imgur.com/fXkoaga.png", "https://i.imgur.com/Zp3UwIn.png", "https://i.imgur.com/emiyWRt.png",
-            "https://i.imgur.com/2qQ9tTy.png", "https://i.imgur.com/GGIXJSu.png", "https://i.imgur.com/M5y0Ca4.png", "https://i.imgur.com/evjoI94.png",
-            "https://i.imgur.com/8rFuyiK.png", "https://i.imgur.com/WfgsJeF.png", "https://i.imgur.com/qVBqChk.png", "https://i.imgur.com/c2gnJbt.png",
-            "https://i.imgur.com/LjXGx4c.png", "https://i.imgur.com/P3c3E10.png", "https://i.imgur.com/McrXP12.png", "https://i.imgur.com/ByNVjcq.png",
-            "https://i.imgur.com/hyUBGB7.png", "https://i.imgur.com/OSD6bLK.png"
-        ];
-
-        // Función para llenar marquees
-        function fillMarquee(containerId, images) {
-            const container = document.getElementById(containerId);
-            const repetitions = 4; 
-            
-            let html = '';
-            for(let i=0; i<repetitions; i++) {
-                images.forEach(src => {
-                    html += `<img src="${src}" class="marquee-item" loading="lazy">`;
+                item.parentElement.querySelectorAll('.accordion-item').forEach(s => {
+                    if (s !== item) {
+                        s.classList.remove('active');
+                        const sp = s.querySelector('.sub-accordion-header span');
+                        if(sp) sp.innerText = '▼';
+                    }
                 });
             }
-            container.innerHTML = html;
-        }
 
-        // --- Lógica de Arrastre (Drag/Swipe) para Carruseles ---
-
-        // Variables de estado global para el arrastre
-        let isDragging = false;
-        let startX = 0;
-        let startTransformX = 0;
-        let activeMarquee = null;
-        let originalAnimationClass = '';
-
-        // Función para obtener el valor actual de translateX
-        function getTranslateX(element) {
-            const style = window.getComputedStyle(element);
-            const matrix = style.transform;
-            if (matrix && matrix !== 'none') {
-                // Obtener los valores de la matriz de transformación
-                const matrixValues = matrix.match(/matrix.*\((.+)\)/);
-                if (matrixValues && matrixValues[1]) {
-                    const values = matrixValues[1].split(', ').map(parseFloat);
-                    // translateX es el 5º valor (índice 4)
-                    return values[4] || 0; 
-                }
+            item.classList.toggle('active');
+            const span = header.querySelector('span');
+            
+            if (item.classList.contains('active')) {
+                span.innerText = '▲';
+                // Posicionamiento de vista al inicio del acordeón
+                setTimeout(() => {
+                    header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 250);
+            } else {
+                span.innerText = '▼';
             }
-            return 0;
         }
 
-        // Evento de inicio de arrastre (MouseDown o TouchStart)
-        function handleStart(e, marqueeElement) {
-            // Evita el comportamiento de arrastre de la imagen en navegadores
-            e.preventDefault(); 
-            isDragging = true;
-            activeMarquee = marqueeElement;
-            originalAnimationClass = activeMarquee.classList.contains('scroll-left') ? 'scroll-left' : 'scroll-right';
+        // Draggable carousels
+        const sliders = document.querySelectorAll('.carousel-container');
+        sliders.forEach(slider => {
+            let isDown = false;
+            let startX;
+            let scrollLeft;
 
-            // Pausar la animación CSS y eliminar la clase para aplicar transform manualmente
-            activeMarquee.style.animationPlayState = 'paused';
-            activeMarquee.classList.remove('scroll-left', 'scroll-right');
-            
-            // Obtener el punto de inicio X y el valor de traducción actual
-            startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-            startTransformX = getTranslateX(activeMarquee);
-            
-            activeMarquee.style.cursor = 'grabbing';
-            // Previene que se dispare el evento touchMove si no se mueve
-            activeMarquee.style.touchAction = 'none'; 
-        }
-
-        // Evento de movimiento (MouseMove o TouchMove)
-        function handleMove(e) {
-            if (!isDragging || !activeMarquee) return;
-            
-            const currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-            const dx = currentX - startX;
-            
-            // Aplicar la traducción manual (start + delta)
-            activeMarquee.style.transform = `translateX(${startTransformX + dx}px)`;
-        }
-
-        // Evento de finalización (MouseUp, TouchEnd o TouchCancel)
-        function handleEnd() {
-            if (!isDragging || !activeMarquee) return;
-
-            isDragging = false;
-
-            // Para que la animación retome su ciclo natural, debemos quitar el 'transform' explícito.
-            // Esto causará un pequeño salto al punto donde la animación debería estar, pero
-            // garantiza que el bucle infinito continúe.
-            activeMarquee.style.transform = ''; 
-
-            // Reanudar la animación y reestablecer la clase original
-            activeMarquee.classList.add(originalAnimationClass);
-            activeMarquee.style.animationPlayState = 'running';
-            
-            activeMarquee.style.cursor = 'grab';
-            activeMarquee.style.touchAction = 'pan-y'; // Reestablecer touch-action
-            activeMarquee = null;
-        }
-
-
-        // Inicializar el script en DOMContentLoaded
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Inicializar la data de los carruseles
-            fillMarquee('marquee1', images1);
-            fillMarquee('marquee2', images2);
-            fillMarquee('marquee3', images3);
-
-            // 2. Adjuntar los listeners de arrastre a los carruseles
-            const marquees = document.querySelectorAll('.marquee-content');
-            marquees.forEach(marquee => {
-                // Eventos de ratón
-                marquee.addEventListener('mousedown', (e) => handleStart(e, marquee));
-                // Eventos táctiles
-                marquee.addEventListener('touchstart', (e) => handleStart(e, marquee));
-                marquee.style.cursor = 'grab';
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
             });
-
-            // Listeners globales para el movimiento y finalización del arrastre
-            document.addEventListener('mousemove', handleMove);
-            document.addEventListener('mouseup', handleEnd);
-            document.addEventListener('touchmove', handleMove);
-            document.addEventListener('touchend', handleEnd);
-            document.addEventListener('touchcancel', handleEnd);
+            slider.addEventListener('mouseleave', () => isDown = false);
+            slider.addEventListener('mouseup', () => isDown = false);
+            slider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 2;
+                slider.scrollLeft = scrollLeft - walk;
+            });
         });
-
+        
     </script>
 </body>
 </html>
